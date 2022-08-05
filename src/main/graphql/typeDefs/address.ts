@@ -12,12 +12,12 @@ export default gql`
     stateCode: String
   }
 
-  input SearhcAddressInput {
+  input SearchAddressInput {
     zipcode: String!
     country: String!
   }
 
   type Query {
-    searchAddress(input: SearhcAddressInput!): Address
+    searchAddress(input: SearchAddressInput!): Address
   }
 `
