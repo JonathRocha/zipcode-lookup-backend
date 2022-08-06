@@ -1,6 +1,7 @@
 {
   "name": "zipcode-lookup-backend",
   "version": "1.0.0",
+  "author": "Jonathan Rocha <johnferreirar@gmail.com>",
   "scripts": {
     "start": "node dist/main/server.js",
     "build": "rimraf dist && tsc",
@@ -11,7 +12,6 @@
     "url": "git+https://github.com/JonathRocha/zipcode-lookup-backend.git"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/JonathRocha/zipcode-lookup-backend/issues"
