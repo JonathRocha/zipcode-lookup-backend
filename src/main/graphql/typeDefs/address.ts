@@ -13,8 +13,8 @@ export default gql`
   }
 
   input SearchAddressInput {
-    zipcode: String!
-    country: String!
+    zipCode: String!
+    countryCode: String!
   }
 
   type Query {

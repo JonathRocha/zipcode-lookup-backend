@@ -8,9 +8,9 @@ import { SearchAddressByZipcodeAndCountry } from '@/domain/usecases'
 export class SearchAddressByZipcodeAndCountryService implements SearchAddressByZipcodeAndCountry {
   constructor(private readonly httpGetClient: HttpGetClient<never, AddressModel>) {}
 
-  async search(zipCode: string, country: string): Promise<Address | undefined> {
+  async search(zipCode: string, countryCode: string): Promise<Address | undefined> {
     const response = await this.httpGetClient.get({
-      url: `https://api.zippopotam.us/${country.toLowerCase()}/${zipCode}`
+      url: `https://api.zippopotam.us/${countryCode.toLowerCase()}/${zipCode}`
     })
 
     switch (response.statusCode) {

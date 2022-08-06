@@ -7,8 +7,8 @@ export class SearchAddressController implements Controller {
 
   async handle(request: SearchAddressController.Request): Promise<APIResponse<AddressViewModel>> {
     try {
-      const { zipcode, country } = request
-      const address = await this.searchAddressByZipcodeAndCountry.search(zipcode, country)
+      const { zipCode, countryCode } = request
+      const address = await this.searchAddressByZipcodeAndCountry.search(zipCode, countryCode)
 
       return ok(address)
     } catch (error) {
@@ -19,7 +19,7 @@ export class SearchAddressController implements Controller {
 
 export namespace SearchAddressController {
   export type Request = {
-    zipcode: string
-    country: string
+    zipCode: string
+    countryCode: string
   }
 }
