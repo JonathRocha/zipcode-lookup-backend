@@ -1,8 +1,9 @@
+import { modelToEntityAddressMapper } from '@/application/mappers'
 import { AddressModel } from '@/application/models'
 import { SearchAddressByZipcodeAndCountryService } from '@/application/services'
+import { UnexpectedError } from '@/domain/errors'
 import { HttpGetClientSpy } from '@/tests/application/mocks/mockHttpGetClient'
 import { mockAddressModel } from '@/tests/application/models/mockAddress'
-import { modelToEntityAddressMapper } from '@/application/mappers'
 
 type SutTypes = {
   sut: SearchAddressByZipcodeAndCountryService
@@ -36,5 +37,14 @@ describe('SearchAddressByZipcodeAndCountryService Application Service', () => {
     const { sut } = makeSut()
     const address = await sut.search('12345678', 'BR')
     expect(address).toEqual(modelToEntityAddressMapper(mockAddressModel))
+  })
+
+  it('Should throw UnexpectedError is HttpGetClient returns statusCode different from 200', async () => {
+    const { sut, httpGetClientSpy } = makeSut()
+    jest
+      .spyOn(httpGetClientSpy, 'get')
+      .mockImplementationOnce(async () => Promise.resolve({ statusCode: 500, body: {} as any }))
+    const promise = sut.search('12345678', 'BR')
+    await expect(promise).rejects.toThrow(new UnexpectedError())
   })
 })
