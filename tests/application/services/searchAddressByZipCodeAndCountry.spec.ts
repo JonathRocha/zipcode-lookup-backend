@@ -1,6 +1,8 @@
+import { AddressModel } from '@/application/models'
 import { SearchAddressByZipcodeAndCountryService } from '@/application/services'
 import { HttpGetClientSpy } from '@/tests/application/mocks/mockHttpGetClient'
-import { AddressModel } from '@/application/models'
+import { mockAddressModel } from '@/tests/application/models/mockAddress'
+import { modelToEntityAddressMapper } from '@/application/mappers'
 
 type SutTypes = {
   sut: SearchAddressByZipcodeAndCountryService
@@ -28,5 +30,11 @@ describe('SearchAddressByZipcodeAndCountryService Application Service', () => {
     jest.spyOn(httpGetClientSpy, 'get').mockImplementationOnce(async () => Promise.reject(new Error()))
     const promise = sut.search('12345678', 'BR')
     await expect(promise).rejects.toThrow()
+  })
+
+  it('Should return an Address if HttpGetClient returns 200', async () => {
+    const { sut } = makeSut()
+    const address = await sut.search('12345678', 'BR')
+    expect(address).toEqual(modelToEntityAddressMapper(mockAddressModel))
   })
 })
