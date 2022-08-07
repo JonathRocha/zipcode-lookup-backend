@@ -22,4 +22,11 @@ describe('SearchAddressByZipcodeAndCountryService Application Service', () => {
     await sut.search('12345678', 'BR')
     expect(httpGetClientSpy.params).toEqual({ url: 'https://api.zippopotam.us/br/12345678' })
   })
+
+  it('Should throw if HttpGetClient throws', async () => {
+    const { sut, httpGetClientSpy } = makeSut()
+    jest.spyOn(httpGetClientSpy, 'get').mockImplementationOnce(async () => Promise.reject(new Error()))
+    const promise = sut.search('12345678', 'BR')
+    await expect(promise).rejects.toThrow()
+  })
 })
